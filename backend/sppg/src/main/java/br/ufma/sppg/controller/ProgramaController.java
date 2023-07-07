@@ -1,5 +1,7 @@
 package br.ufma.sppg.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.ufma.sppg.model.Docente;
+import br.ufma.sppg.model.Orientacao;
+import br.ufma.sppg.model.Producao;
+import br.ufma.sppg.model.Programa;
+import br.ufma.sppg.model.Tecnica;
 import br.ufma.sppg.service.ProgramaService;
 import br.ufma.sppg.service.exceptions.ServicoRuntimeException;
 
