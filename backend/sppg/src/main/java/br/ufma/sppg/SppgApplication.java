@@ -1,5 +1,4 @@
 package br.ufma.sppg;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

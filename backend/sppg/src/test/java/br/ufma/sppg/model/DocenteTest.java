@@ -43,7 +43,7 @@ public class DocenteTest {
 
         repo.save(docente);
 
-        Docente queryResult = repo.findByNome("John Doe");        
+        Docente queryResult = (Docente) repo.findByNome("John Doe");        
         Assertions.assertNotNull(queryResult);
     }
 
