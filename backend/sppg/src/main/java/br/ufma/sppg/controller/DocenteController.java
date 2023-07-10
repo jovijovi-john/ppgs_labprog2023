@@ -9,18 +9,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.ufma.sppg.model.Docente;
 import br.ufma.sppg.model.Orientacao;
 import br.ufma.sppg.model.Producao;
 import br.ufma.sppg.model.Tecnica;
+import br.ufma.sppg.service.DocenteService;
 import br.ufma.sppg.service.OrientacaoService;
 import br.ufma.sppg.service.ProducaoService;
 import br.ufma.sppg.service.TecnicaService;
 import br.ufma.sppg.service.exceptions.ServicoRuntimeException;
 
 
-@RequestMapping("/api/Docente")
-@RestController
+@RequestMapping("/docente")
+@RestController()
 public class DocenteController{
+
+    @Autowired
+    DocenteService docenteService;
     @Autowired
     TecnicaService tecnicaServivce;
 
@@ -29,6 +34,19 @@ public class DocenteController{
 
     @Autowired
     OrientacaoService orientacaoServivce;
+
+    @GetMapping("/obterDocentes")
+    public ResponseEntity<?> obterTudo() {
+        try {
+            List<Docente> docentes = docenteService.obterDocentes();
+            
+            return ResponseEntity.ok().body(docentes);
+
+        } catch(ServicoRuntimeException e) {
+            
+            return ResponseEntity.badRequest().body("Erro ao buscar docentes");
+        }
+    }
 
     @GetMapping("/obter_producoes/{id}/{data1}/{data2}")
     public ResponseEntity<?> obterProducoesDeDocente(@PathVariable(value = "id", required = true) Integer idDocente,

@@ -30,6 +30,8 @@ public class OrientacaoController {
   @Autowired
   TecnicaService tecnicaService;
 
+  
+  
   @GetMapping("/obterOrientacoesDocenteComTecnica")
   public ResponseEntity<?> obterOrientacoesDocenteComTecnica(
       @RequestParam("docente") Integer idDocente, Integer dataInicio, Integer dataFim) {

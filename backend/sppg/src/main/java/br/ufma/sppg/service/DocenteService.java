@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.ufma.sppg.dto.Indice;
@@ -18,6 +19,11 @@ public class DocenteService {
     
     @Autowired
     DocenteRepository repository;
+
+    public List<Docente> obterDocentes() {
+        Sort sort = Sort.by(Sort.Direction.ASC, "nome");
+        return repository.findAll(sort);
+    }
 
     public Indice obterIndice(Integer idDocente, Integer anoIni, Integer anoFin){ 
         verificarId(idDocente);

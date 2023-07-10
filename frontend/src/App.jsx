@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect } from "react";
+import { Outlet } from "react-router";
+import { useNavigate, Link } from "react-router-dom";
+// import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  // const [pageActive, setPageActive] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {}), [navigate];
+
+  const pages = ["Dashboard", "Tecnicas", "Producoes", "Docentes"];
+
+  function handleButton(title) {
+    return (
+      <li className="mt-2 w-full p-4 text-left" key={title}>
+        <Link
+          to={`/app/${title}`}
+          className="pl-6 w-full h-full text-zinc-100 font-bold block"
+        >
+          {title}
+        </Link>
+      </li>
+    );
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="bg-black h-screen w-full ">
+      <div className="h-full w-screen flex">
+        <aside className="fixed top-0 left-0 h-full bg-indigo-700 w-72">
+          <h1 className="text-3xl font-bold text-white py-6 px-6 border-b-2 ">
+            PPGS
+          </h1>
 
-export default App
+          <ul className="flex flex-col text-zinc-200 w-full">
+            {pages.map((page) => handleButton(page))}
+          </ul>
+        </aside>
+        <Outlet />
+      </div>
+    </div>
+  );
+}
