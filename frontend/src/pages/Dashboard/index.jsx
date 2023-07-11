@@ -9,9 +9,9 @@ export default function Dashboard() {
   const [programas, setProgramas] = useState([]);
   const [producoesPrograma, setProducoesPrograma] = useState([]);
 
-  const [iGeral, setIGeral] = useState("17,43");
-  const [iRestrito, setIRestrito] = useState("16,45");
-  const [iNaoRestrito, setINaoRestrito] = useState("0,99");
+  const [iGeral, setIGeral] = useState(0);
+  const [iRestrito, setIRestrito] = useState(0);
+  const [iNaoRestrito, setINaoRestrito] = useState(0);
 
   const programasRef = useRef();
 
@@ -23,6 +23,17 @@ export default function Dashboard() {
 
         const valueSelect = programasRef.current.value;
         setSelectedPrograma(valueSelect);
+      });
+  }
+
+  async function getIndicadores() {
+    fetch(`${connection.api_url}/v1/qualis/indice/15`)
+      .then((data) => data.json())
+      .then((data) => {
+        setIGeral(data.indice.indiceGeral.toFixed(2));
+        setINaoRestrito(data.indice.indiceNRest.toFixed(2));
+        setIRestrito(data.indice.indiceRest.toFixed(2));
+        console.log(data);
       });
   }
 
@@ -42,6 +53,7 @@ export default function Dashboard() {
   useEffect(() => {
     // Fetch para pegar todos os programas
     getProgramas();
+    getIndicadores();
     getProducoesPrograma();
   }, []);
 
