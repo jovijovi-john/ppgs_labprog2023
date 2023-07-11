@@ -20,7 +20,7 @@ import br.ufma.sppg.service.TecnicaService;
 import br.ufma.sppg.service.exceptions.ServicoRuntimeException;
 
 
-@RequestMapping("/docente")
+@RequestMapping("/api/docente")
 @RestController()
 public class DocenteController{
 

@@ -27,6 +27,16 @@ public class ProgramaController {
     @Autowired
     ProgramaService programa;
 
+    @GetMapping("/obterTodosProgramas")
+    public ResponseEntity obterPrograma() {
+        try {
+            List<Programa> programas = programa.obterTodosProgramas();
+            return ResponseEntity.ok().body(programas);
+        } catch (ServicoRuntimeException e) {
+            return ResponseEntity.badRequest().body("Erro ao buscar programas");
+        }
+    }
+
     @GetMapping("/obterPrograma")
     public ResponseEntity obterPrograma(
             @RequestParam("programa") String nome){

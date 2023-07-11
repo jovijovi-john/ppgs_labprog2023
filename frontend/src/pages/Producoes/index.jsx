@@ -5,7 +5,7 @@ export default function Producoes() {
   const [selectedDocente, setSelectedDocente] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8080/docente/obterDocentes")
+    fetch("http://localhost:8080/api/docente/obterDocentes")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

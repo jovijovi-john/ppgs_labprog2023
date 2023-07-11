@@ -26,7 +26,7 @@ export default function App() {
 
   return (
     <div className="bg-black h-screen w-full ">
-      <div className="h-full w-screen flex">
+      <div className="h-full w-screen flex pl-72 overflow-hidden">
         <aside className="fixed top-0 left-0 h-full bg-indigo-700 w-72">
           <h1 className="text-3xl font-bold text-white py-6 px-6 border-b-2 ">
             PPGS
@@ -36,7 +36,10 @@ export default function App() {
             {pages.map((page) => handleButton(page))}
           </ul>
         </aside>
-        <Outlet />
+
+        <div className="mt-12 ml-16">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
