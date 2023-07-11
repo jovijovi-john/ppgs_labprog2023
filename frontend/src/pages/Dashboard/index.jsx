@@ -1,8 +1,78 @@
 import { useEffect, useState, useRef } from "react";
 
+import { Bar } from "react-chartjs-2";
+
 import connection from "../../configs/connection";
 import TitlePage from "../../components/TitlePage";
 import Indicador from "../../components/Indicador";
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const dados = {
+  labels: ["2019", "2020", "2021", "2022", "2023"],
+  datasets: [
+    {
+      label: "A1",
+      data: [17, 26, 30, 33, 9],
+      backgroundColor: "#4f46e5",
+    },
+    {
+      label: "A2",
+      data: [6, 17, 13, 8, 0],
+      backgroundColor: "#2e1065",
+    },
+    {
+      label: "A3",
+      data: [20, 46, 24, 26, 12],
+      backgroundColor: "#e0e7ff",
+    },
+    {
+      label: "A4",
+      data: [55, 25, 49, 30, 0],
+      backgroundColor: "#818cf8",
+    },
+  ],
+};
+
+const options = {
+  plugins: {
+    title: {
+      display: true,
+      text: "Produção vs Qualis",
+      color: "#fff",
+      weight: 500,
+      font: {
+        size: 18,
+      },
+    },
+  },
+  responsive: true,
+  scales: {
+    x: {
+      stacked: true,
+    },
+    y: {
+      stacked: true,
+    },
+  },
+};
 
 export default function Dashboard() {
   const [selectedPrograma, setSelectedPrograma] = useState("");
@@ -27,7 +97,7 @@ export default function Dashboard() {
   }
 
   async function getIndicadores() {
-    fetch(`${connection.api_url}/v1/qualis/indice/15`)
+    fetch(`${connection.api_url}/qualis/indice/15`)
       .then((data) => data.json())
       .then((data) => {
         setIGeral(data.indice.indiceGeral.toFixed(2));
@@ -64,10 +134,8 @@ export default function Dashboard() {
   return (
     <div className="text-white">
       <TitlePage title="Dashboard" />
-
-      <div className="flex flex-col">
+      <div className="flex flex-col ">
         {/* Filtros */}
-        <div className="w-16 bg-red-500">{selectedPrograma}</div>
         <h4 className="text-white font-semibold">Filtros</h4>
         <div className="flex gap-4 mt-3 ml-3">
           <div>
@@ -107,7 +175,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-
       <div className="flex flex-col mt-6">
         {/* Filtros */}
         <h4 className="text-white font-semibold">Indicadores Capes</h4>
@@ -129,6 +196,10 @@ export default function Dashboard() {
             color="bg-yellow-400"
           />
         </div>
+      </div>
+
+      <div className="flex max-w-7xl mt-16 h-96  max-h-sm ">
+        <Bar data={dados} options={options} />
       </div>
     </div>
   );

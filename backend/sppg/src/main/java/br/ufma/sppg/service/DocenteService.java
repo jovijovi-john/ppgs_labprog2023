@@ -20,6 +20,7 @@ public class DocenteService {
     @Autowired
     DocenteRepository repository;
 
+
     public List<Docente> obterDocentes() {
         Sort sort = Sort.by(Sort.Direction.ASC, "nome");
         return repository.findAll(sort);

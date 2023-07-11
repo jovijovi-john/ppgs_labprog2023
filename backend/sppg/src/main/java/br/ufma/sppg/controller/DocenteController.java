@@ -35,6 +35,17 @@ public class DocenteController{
     @Autowired
     OrientacaoService orientacaoServivce;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> obterDocente(@PathVariable(value = "id", required = true) Integer idDocente) {
+        try {
+            var docente = docenteService.obterDocente(idDocente);
+            return ResponseEntity.ok().body(docente);
+        } catch (ServicoRuntimeException e){
+            return ResponseEntity.badRequest().body("O docente informado não existe");
+        }
+        
+    }
+
     @GetMapping("/obterDocentes")
     public ResponseEntity<?> obterTudo() {
         try {
@@ -54,11 +65,9 @@ public class DocenteController{
     @PathVariable(value = "anoFim", required = true)  Integer anoFim){
 
         try{
-            System.out.println("O docente é " + idDocente);
-            System.out.println("O ano de inicio é " + anoIni);
-            System.out.println("O ano de Fim é " + anoFim);
 
-            List<Producao> producaoDocente = producaoServivce.obterProducoesDocente(Integer.parseInt(idDocente), anoIni, anoFim);
+            // Lista de todas as produções do docente no período
+            List<Producao> producaoDocente = producaoServivce.obterProducoesDocente(idDocente, anoIni, anoFim);
             return ResponseEntity.ok(producaoDocente);
         }catch (ServicoRuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());

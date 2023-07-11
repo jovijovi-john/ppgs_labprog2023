@@ -22,7 +22,7 @@ import br.ufma.sppg.service.ProgramaService;
 import br.ufma.sppg.service.exceptions.ServicoRuntimeException;
 
 @RestController
-@RequestMapping(value = "/api/v1/qualis")
+@RequestMapping(value = "/api/qualis")
 public class QualisController {
 
     @Autowired
