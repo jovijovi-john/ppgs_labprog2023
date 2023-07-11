@@ -4,50 +4,50 @@ import connection from "../../configs/connection";
 
 export default function Producoes() {
   const [docentes, setDocentes] = useState([]);
+  const [docenteName, setDocenteName] = useState("");
   const [producoesDocente, setProducoesDocente] = useState([]);
   const [selectedDocente, setSelectedDocente] = useState("");
-  const [selectedDocenteName, setSelectedDocenteName] = useState("");
 
   useEffect(() => {
     fetchDocentes();
-  });
+  }, []);
 
   useEffect(() => {
     if (selectedDocente) {
-      // Pegando nome do docente
       fetchDocente();
-
-      // Agora pega as produções dele
       fetchProducoesDocente();
     }
   }, [selectedDocente]);
 
   function fetchDocente() {
     fetch(`${connection.api_url}/docente/${selectedDocente}`)
-      .then((data) => data.json())
+      .then((response) => response.json())
       .then((data) => {
-        setSelectedDocenteName(data.nome);
-      });
+        setDocenteName(data.nome);
+      })
+      .catch((error) => console.error(error));
   }
-
   function fetchDocentes() {
     fetch(`${connection.api_url}/docente/obterDocentes`)
       .then((response) => response.json())
       .then((data) => {
         setDocentes(data);
         setSelectedDocente(data[0].id);
-        setSelectedDocenteName(data[0].nome);
+        setDocenteName(data[0].nome);
       })
       .catch((error) => console.error(error));
   }
+
   function fetchProducoesDocente() {
     fetch(
-      `${connection.api_url}/docente/obter_producoes/${selectedDocente}/2020/2023`
+      `${connection.api_url}/docente/obter_producoes/${selectedDocente}/1950/2023`
     )
-      .then((data) => data.json())
+      .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setProducoesDocente(data);
-      });
+      })
+      .catch((error) => console.error(error));
   }
 
   function handleSelectedDocente(e) {
@@ -56,7 +56,6 @@ export default function Producoes() {
 
   return (
     <div className="w-full">
-      <div className="bg-red-500">{selectedDocente}</div>
       <select
         value={selectedDocente}
         onChange={handleSelectedDocente}
@@ -85,7 +84,7 @@ export default function Producoes() {
           {producoesDocente.map((producao) => (
             <tr key={producao.id} className=" ml-4">
               <td className="p-4">{producao.ano}</td>
-              <td className="p-4">{selectedDocenteName}</td>
+              <td className="p-4">{docenteName}</td>
               <td className="p-4">{producao.titulo}</td>
               <td className="p-4">{producao.nomeLocal}</td>
               <td className="p-4">Sim</td>
