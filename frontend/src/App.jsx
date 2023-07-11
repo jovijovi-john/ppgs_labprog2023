@@ -27,7 +27,7 @@ export default function App() {
   return (
     <div className="bg-black h-screen w-full ">
       <div className="h-full w-screen flex pl-72 overflow-hidden">
-        <aside className="fixed top-0 left-0 h-full bg-indigo-600 w-72">
+        <aside className="fixed top-0 left-0 h-full bg-zinc-800 w-72">
           <h1 className="text-3xl font-bold text-white py-6 px-6 border-b-2 ">
             PPGS
           </h1>

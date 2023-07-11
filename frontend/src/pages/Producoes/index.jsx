@@ -56,17 +56,27 @@ export default function Producoes() {
 
   return (
     <div className="w-full">
-      <select
-        value={selectedDocente}
-        onChange={handleSelectedDocente}
-        className="w-full rounded p-3"
-      >
-        {docentes.map((docente) => (
-          <option className=" text-black" key={docente.id} value={docente.id}>
-            {docente.nome}
-          </option>
-        ))}
-      </select>
+      <div className="flex gap-4 items-center">
+        <label htmlFor="docente" className="text-white text-lg font-bold">
+          Docente:
+        </label>
+        <select
+          id="docente"
+          value={selectedDocente}
+          onChange={handleSelectedDocente}
+          className="w-96 rounded p-3 bg-zinc-700 text-zinc-300"
+        >
+          {docentes.map((docente) => (
+            <option
+              className=" text-zinc-300"
+              key={docente.id}
+              value={docente.id}
+            >
+              {docente.nome}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <table className="p-4 w-full overflow-x-auto text-sm mt-8 outline-none">
         <thead className="text-white border-b-2 border-zinc-700">

@@ -10,10 +10,10 @@ export default function Login() {
   }
 
   return (
-    <main className="h-screen w-full bg-indigo-900 flex ">
+    <main className="h-screen w-full bg-zinc-900 flex ">
       <form
         onSubmit={handleSubmit}
-        className="mx-auto my-auto flex flex-col w-full max-w-xl bg-indigo-950 rounded-lg p-4 h-[500px] "
+        className="mx-auto my-auto flex flex-col w-full max-w-xl bg-zinc-950 rounded-lg p-4 h-[500px] "
       >
         <h1 className="text-white text-center text-4xl font-bold my-6">
           Login
@@ -43,7 +43,7 @@ export default function Login() {
 
         <button
           type="submit"
-          className="text-white p-4 mt-auto mb-8 bg-indigo-600 hover:bg-emerald-600 transition-all ease-out w-64 mx-auto duration-500 rounded-full"
+          className="text-white p-4 mt-auto mb-8 bg-zinc-600 hover:bg-emerald-600 transition-all ease-out w-64 mx-auto duration-500 rounded-full"
         >
           Entrar
         </button>

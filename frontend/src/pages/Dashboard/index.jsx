@@ -36,7 +36,7 @@ const dados = {
     {
       label: "A2",
       data: [6, 17, 13, 8, 0],
-      backgroundColor: "#2e1065",
+      backgroundColor: "#5d30b1",
     },
     {
       label: "A3",
@@ -136,10 +136,10 @@ export default function Dashboard() {
       <TitlePage title="Dashboard" />
       <div className="flex flex-col ">
         {/* Filtros */}
-        <h4 className="text-white font-semibold">Filtros</h4>
+        <h4 className="text-xl text-white font-semibold">Filtros</h4>
         <div className="flex gap-4 mt-3 ml-3">
           <div>
-            <h5 className="text-sm">Programas</h5>
+            <h5 className="text-md">Programas</h5>
             <select
               ref={programasRef}
               name="programa"
@@ -157,7 +157,7 @@ export default function Dashboard() {
           </div>
 
           <div>
-            <h5 className="text-sm">Ano inicial</h5>
+            <h5 className="text-md">Ano inicial</h5>
             <input
               type="number"
               className="text-black p-2 rounded bg-zinc-200 w-32 ml-1 mt-2"
@@ -166,7 +166,7 @@ export default function Dashboard() {
           </div>
 
           <div>
-            <h5 className="text-sm">Ano final</h5>
+            <h5 className="text-md">Ano final</h5>
             <input
               type="number"
               className="text-black p-2 rounded bg-zinc-200 w-32 ml-1 mt-2"
@@ -177,7 +177,7 @@ export default function Dashboard() {
       </div>
       <div className="flex flex-col mt-6">
         {/* Filtros */}
-        <h4 className="text-white font-semibold">Indicadores Capes</h4>
+        <h4 className="text-xl text-white font-semibold">Indicadores Capes</h4>
         <div className="flex gap-8 mt-3 ml-3">
           <Indicador
             title="Total Produções"
@@ -198,7 +198,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="flex max-w-7xl mt-16 h-96  max-h-sm ">
+      <div className="flex w-3/4 mx-auto mt-8 ">
         <Bar data={dados} options={options} />
       </div>
     </div>
