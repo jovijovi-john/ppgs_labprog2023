@@ -53,45 +53,46 @@ public class ProgramaService {
 
                 if (producao.getAno() >= anoIni && producao.getAno() <= anoFin
                         && !indicesProd.contains(producao.getId())) {
+                    
+                        if (producao.getQualis() != null){
 
-                    indicesProd.add(producao.getId());
-                    switch (producao.getQualis()) {
-                        case "A1":
-                            iRestrito += 1.0f;
-                            break;
+                            indicesProd.add(producao.getId());
+                            switch (producao.getQualis()) {
+                                case "A1":
+                                iRestrito += 1.0f;
+                                break;
 
-                        case "A2":
-                            iRestrito += 0.85;
-                            break;
-
-                        case "A3":
+                                case "A2":
+                                iRestrito += 0.85;
+                                break;
+                                
+                            case "A3":
                             iRestrito += 0.725;
-                            break;
+                                break;
 
-                        case "A4":
+                            case "A4":
                             iRestrito += 0.625;
                             break;
 
-                        case "B1":
-                            iNRestrito += 0.5;
-                            break;
+                            case "B1":
+                                iNRestrito += 0.5;
+                                break;
+                                
+                            case "B2":
+                                iNRestrito += 0.25;
+                                break;
 
-                        case "B2":
-                            iNRestrito += 0.25;
-                            break;
-
-                        case "B3":
-                            iNRestrito += 0.1;
-                            break;
-
-                        case "B4":
-                            iNRestrito += 0.05;
-                            break;
-
-                        default:
-                            throw new ServicoRuntimeException("Uma das produções possui o Qualis inválido");
+                            case "B3":
+                                iNRestrito += 0.1;
+                                break;
+                                
+                                case "B4":
+                                iNRestrito += 0.05;
+                                break;
+                                
+                            }
+                        }
                     }
-                }
             }
         }
         iGeral = iRestrito + iNRestrito;
