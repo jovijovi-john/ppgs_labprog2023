@@ -36,15 +36,17 @@ public class QualisController {
      * response entity para
      * tratativa de exceções
      */
+    
     @GetMapping(value = "/indice/{idProg}")
     public ResponseEntity obterIndicesCapes(@PathVariable Integer idProg) {
 
         Indice indice;
         List<Producao> producoes;
 
+        
         try {
-            indice = service.obterProducaoIndices(idProg, 1950, 2050);
-            producoes = service.obterProducoes(idProg, 1950, 2050);
+            indice = service.obterProducaoIndices(idProg, 2000, 2023);
+            producoes = service.obterProducoes(idProg, 2000, 2023);
         } catch (ServicoRuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

@@ -48,13 +48,17 @@ public class DocenteController{
         }
     }
 
-    @GetMapping("/obter_producoes/{id}/{data1}/{data2}")
+    @GetMapping("/obter_producoes/{id}/{anoIni}/{anoFim}")
     public ResponseEntity<?> obterProducoesDeDocente(@PathVariable(value = "id", required = true) Integer idDocente,
-    @PathVariable(value = "data1", required = true)  Integer data1,
-    @PathVariable(value = "data2", required = true)  Integer data2){
+    @PathVariable(value = "anoIni", required = true)  Integer anoIni,
+    @PathVariable(value = "anoFim", required = true)  Integer anoFim){
 
         try{
-            List<Producao> producaoDocente = producaoServivce.obterProducoesDocente(idDocente, data1, data2);
+            System.out.println("O docente é " + idDocente);
+            System.out.println("O ano de inicio é " + anoIni);
+            System.out.println("O ano de Fim é " + anoFim);
+
+            List<Producao> producaoDocente = producaoServivce.obterProducoesDocente(Integer.parseInt(idDocente), anoIni, anoFim);
             return ResponseEntity.ok(producaoDocente);
         }catch (ServicoRuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -63,11 +67,11 @@ public class DocenteController{
 
     @GetMapping("/obter_orientacoes/{id}")
     public ResponseEntity<?> obterOrientacoesDeDocente(@PathVariable(value = "id", required = true) Integer idDocente,
-    @PathVariable(value = "data1", required = true)  Integer data1,
-    @PathVariable(value = "data2", required = true)  Integer data2){
+    @PathVariable(value = "anoIni", required = true)  Integer anoIni,
+    @PathVariable(value = "anoFim", required = true)  Integer anoFim){
 
         try{
-            List<Orientacao> orientacaoDocente = orientacaoServivce.obterOrientacaoDocente(idDocente, data1, data2);
+            List<Orientacao> orientacaoDocente = orientacaoServivce.obterOrientacaoDocente(idDocente, anoIni, anoFim);
             return ResponseEntity.ok(orientacaoDocente);
         }catch (ServicoRuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());
