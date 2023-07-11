@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 
+import connection from "../../configs/connection";
+
 export default function Producoes() {
   const [docentes, setDocentes] = useState([]);
+  const [producoesDocente, setProducoesDocente] = useState([]);
   const [selectedDocente, setSelectedDocente] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/docente/obterDocentes")
+    fetch(`${connection.api_url}/docente/obterDocentes`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -14,6 +17,13 @@ export default function Producoes() {
         console.log(docentes);
       })
       .catch((error) => console.error(error));
+
+    fetch(`${connection.api_url}/docente/obter_producoes/15/2020/2023`)
+      .then((data) => data.json())
+      .then((data) => {
+        console.log(data);
+        setProducoesDocente(data);
+      });
   }, []);
 
   function handleSelectedDocente(e) {
@@ -21,7 +31,7 @@ export default function Producoes() {
   }
 
   return (
-    <div className="bg-red-500">
+    <div className="">
       <select
         value={selectedDocente}
         onChange={handleSelectedDocente}
@@ -34,26 +44,29 @@ export default function Producoes() {
         ))}
       </select>
 
-      <table className="table-auto w-full">
-        <thead className="text-white">
-          <tr>
-            <th className="text-left">Ano</th>
-            <th className="text-left">Docente</th>
-            <th className="text-left">Titulo</th>
-            <th className="text-left">Local</th>
-            <th className="text-left">Orientação</th>
-            <th className="text-left">Estatísticas</th>
+      <table className="p-4 overflow-scroll">
+        <thead className="text-white border-b-2 border-zinc-700">
+          <tr className="">
+            <th className="text-left p-4">Ano</th>
+            <th className="text-left p-4">Docente</th>
+            <th className="text-left p-4">Titulo</th>
+            <th className="text-left p-4">Local</th>
+            <th className="text-left p-4">Orientação</th>
+            <th className="text-left p-4">Estatísticas</th>
           </tr>
         </thead>
+
         <tbody className="text-zinc-300">
-          <tr>
-            <td>2022</td>
-            <td>Geraldo Braz Junior</td>
-            <td>Sexos e jumentos</td>
-            <td>São Luis</td>
-            <td>Sim</td>
-            <td>20G | 10M | 2D </td>
-          </tr>
+          {producoesDocente.map((producao) => (
+            <tr key={producao.id} className=" ml-4">
+              <td className="p-4">{producao.ano}</td>
+              <td className="p-4">Luis Jorge Enrique Rivero Cabrejos</td>
+              <td className="p-4">{producao.titulo}</td>
+              <td className="p-4">{producao.nomeLocal}</td>
+              <td className="p-4">Sim</td>
+              <td className="p-4">20G | 10M | 2D </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

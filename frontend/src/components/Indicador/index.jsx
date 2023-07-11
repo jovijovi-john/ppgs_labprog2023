@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 export default function Indicador(props) {
   return (
     <div className="flex p-4 rounded-md border border-zinc-900 bg-zinc-900">

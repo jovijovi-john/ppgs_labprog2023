@@ -37,7 +37,7 @@ export default function App() {
           </ul>
         </aside>
 
-        <div className="mt-12 ml-16">
+        <div className="mt-12 mx-16 overflow-auto">
           <Outlet />
         </div>
       </div>
