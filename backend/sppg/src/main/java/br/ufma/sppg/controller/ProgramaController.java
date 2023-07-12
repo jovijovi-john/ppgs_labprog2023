@@ -111,8 +111,6 @@ public class ProgramaController {
         }
     }
 
-    ////////////////
-
     @GetMapping("/qtv_orientacoes_producao") // QTV = quantitativo
     public ResponseEntity<?> ObterQuantitativoOrientacaoProducao(
             @RequestParam("idPrograma") Integer idPrograma,

@@ -36,14 +36,13 @@ public class QualisController {
      * response entity para
      * tratativa de exceções
      */
-    
+
     @GetMapping(value = "/indice/{idProg}")
     public ResponseEntity obterIndicesCapes(@PathVariable Integer idProg) {
 
         Indice indice;
         List<Producao> producoes;
 
-        
         try {
             indice = service.obterProducaoIndices(idProg, 2000, 2023);
             producoes = service.obterProducoes(idProg, 2000, 2023);
@@ -56,9 +55,9 @@ public class QualisController {
     }
 
     // PASSA O ANO
-    @GetMapping(value = "/indice/{idProg}/filter")
-    public ResponseEntity obterIndicesCapes(@PathVariable Integer idProg, @RequestParam Integer anoIni,
-            @RequestParam Integer anoFim) {
+    @GetMapping(value = "/indice/{idProg}/{anoIni}/{anoFim}")
+    public ResponseEntity obterIndicesCapes(@PathVariable Integer idProg, @PathVariable Integer anoIni,
+            @PathVariable Integer anoFim) {
 
         Indice indice;
         List<Producao> producoes;
@@ -100,9 +99,9 @@ public class QualisController {
     }
 
     // PASSA O ANO
-    @GetMapping(value = "/{idProg}/{tipo}/filter")
+    @GetMapping(value = "/{idProg}/{tipo}/{anoIni}/{anoFim}")
     public ResponseEntity obterQualisPorTipo(@PathVariable Integer idProg, @PathVariable String tipo,
-            @RequestParam Integer anoIni, @RequestParam Integer anoFim) {
+            @PathVariable Integer anoIni, @PathVariable Integer anoFim) {
 
         QualisSummaryDTO summary = QualisSummaryDTO.builder().qtd(0).build();
 

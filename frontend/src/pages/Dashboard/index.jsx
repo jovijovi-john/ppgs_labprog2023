@@ -28,6 +28,7 @@ ChartJS.register(
 );
 
 export default function Dashboard() {
+  const [labels, setLabels] = useState({});
   const [docentes, setDocentes] = useState([]);
   const [anoInicio, setAnoInicio] = useState(2020);
   const [anoFim, setAnoFim] = useState(2023);
@@ -36,44 +37,73 @@ export default function Dashboard() {
   const [programas, setProgramas] = useState([]);
   const [producoesPrograma, setProducoesPrograma] = useState([]);
 
+  // deus tenha misericórdia
+  // const [a1, setA1] = useState([]);
+  // const [a2, setA2] = useState([]);
+  // const [a3, setA3] = useState([]);
+  // const [a4, setA4] = useState([]);
+  // const [b1, setB1] = useState([]);
+  // const [b2, setB2] = useState([]);
+  // const [b3, setB3] = useState([]);
+  // const [b4, setB4] = useState([]);
+  const [qualis, setQualis] = useState([]);
+
   const [iGeral, setIGeral] = useState(0);
   const [iRestrito, setIRestrito] = useState(0);
   const [iNaoRestrito, setINaoRestrito] = useState(0);
 
   const programasRef = useRef();
 
-  function getLabels() {
-    const labels = [];
-    const [anoIni, anoFim] = [anoInicio, anoFim];
-
-    for (let ano = anoFim; ano >= anoIni; ano--) {
-      labels.push(ano);
-    }
-
-    return labels;
-  }
+  // Configurações do gráfico
   const dados = {
-    labels: ["2019", "2020", "2021", "2022", "2023"],
+    labels: Object.keys(labels),
     datasets: [
       {
         label: "A1",
-        data: [17, 26, 30, 33, 9],
-        backgroundColor: "#2b2b2b",
+        data: qualis[0],
+        backgroundColor: "#8b1616",
       },
       {
         label: "A2",
-        data: [6, 17, 13, 8, 0],
-        backgroundColor: "#646464",
+        data: qualis[1],
+        backgroundColor: "#f09c00",
       },
       {
         label: "A3",
-        data: [20, 46, 24, 26, 12],
-        backgroundColor: "#c2c2c2",
+        data: qualis[2],
+        backgroundColor: "#f0e000",
       },
       {
         label: "A4",
-        data: [55, 25, 49, 30, 0],
-        backgroundColor: "#fafafa",
+        data: qualis[3],
+        backgroundColor: "#008a4a",
+      },
+
+      {
+        label: "B1",
+        data: qualis[4],
+        backgroundColor: "#038fb3",
+      },
+      {
+        label: "B2",
+        data: qualis[5],
+        backgroundColor: "#0300ad",
+      },
+
+      {
+        label: "B3",
+        data: qualis[6],
+        backgroundColor: "#633af7",
+      },
+      {
+        label: "B4",
+        data: qualis[7],
+        backgroundColor: "#ffa7e9",
+      },
+      {
+        label: "c",
+        data: qualis[8],
+        backgroundColor: "#fcdff4",
       },
     ],
   };
@@ -101,12 +131,15 @@ export default function Dashboard() {
     },
   };
 
+  // Requisições
+
   async function fetchProgramas() {
     fetch(`${connection.api_url}/programa/obterTodosProgramas`)
       .then((data) => data.json())
       .then((data) => {
         setProgramas(data);
         fetchQualisPrograma();
+
         const valueSelect = programasRef.current.value;
         setSelectedPrograma(valueSelect);
       });
@@ -130,10 +163,62 @@ export default function Dashboard() {
     )
       .then((data) => data.json())
       .then((data) => {
+        console.log(producoesPrograma);
         console.log(data.length);
         setProducoesPrograma(data);
-        console.log(producoesPrograma);
       });
+  }
+
+  function getInfoProducoes() {
+    console.log(labels);
+
+    producoesPrograma.forEach((producao, index) => {
+      try {
+        if (labels[producao.ano] == undefined) {
+          labels[producao.ano] = {
+            A1: 0,
+            A2: 0,
+            A3: 0,
+            A4: 0,
+            B1: 0,
+            B2: 0,
+            B3: 0,
+            B4: 0,
+            C: 0,
+          };
+        } else {
+          if (producao.qualis != null) {
+            labels[producao.ano][producao.qualis]++;
+          }
+        }
+      } catch (e) {
+        console.log("erro nas infos producoes");
+      }
+    });
+
+    let a1 = [];
+    let a2 = [];
+    let a3 = [];
+    let a4 = [];
+    let b1 = [];
+    let b2 = [];
+    let b3 = [];
+    let b4 = [];
+    let c = [];
+
+    Object.keys(labels).map((ano, index) => {
+      a1[index] = labels[ano]["A1"];
+      a2[index] = labels[ano]["A2"];
+      a4[index] = labels[ano]["A3"];
+      a3[index] = labels[ano]["A4"];
+      b1[index] = labels[ano]["B1"];
+      b2[index] = labels[ano]["B2"];
+      b4[index] = labels[ano]["B3"];
+      b3[index] = labels[ano]["B4"];
+      c[index] = labels[ano]["C"];
+    });
+
+    setQualis([a1, a2, a3, a4, b1, b2, b3, b4, c]);
   }
 
   function fetchQualisPrograma() {
@@ -169,8 +254,15 @@ export default function Dashboard() {
       fetchQualisPrograma();
       getIndicadores();
       getProducoesPrograma();
+      getInfoProducoes();
     }
   }, [selectedPrograma]);
+
+  useEffect(() => {
+    if (producoesPrograma) {
+      getInfoProducoes();
+    }
+  }, [producoesPrograma]);
 
   function handleSelectedPrograma(e) {
     setSelectedPrograma(e.target.value);
@@ -220,7 +312,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col mt-6">
+      <div className="flex flex-col mt-6 mb-12">
         {/* Filtros */}
         <h4 className="text-xl text-white font-semibold">Indicadores Capes</h4>
         <div className="flex gap-8 mt-3 ml-3">
@@ -243,9 +335,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="flex w-3/4 mx-auto mt-8 ">
-        <Bar data={dados} options={options} />
-      </div>
+      <Bar data={dados} options={options} />
 
       <table className="p-4 w-full overflow-x-auto text-sm mt-8 mb-16 outline-none">
         <thead className="text-white border-b-2 border-zinc-700">
@@ -270,33 +360,11 @@ export default function Dashboard() {
               className="border-b border-zinc-900 text-zinc-200"
             >
               <td className="text-left p-4">{docenteAtual.docente.nome}</td>
-              <td className="text-left p-4">
-                {String(docenteAtual.qualis[0]).padStart(2, "0")}
-              </td>
-              <td className="text-left p-4">
-                {String(docenteAtual.qualis[1]).padStart(2, "0")}
-              </td>
-              <td className="text-left p-4">
-                {String(docenteAtual.qualis[2]).padStart(2, "0")}
-              </td>
-              <td className="text-left p-4">
-                {String(docenteAtual.qualis[3]).padStart(2, "0")}
-              </td>
-              <td className="text-left p-4">
-                {String(docenteAtual.qualis[4]).padStart(2, "0")}
-              </td>
-              <td className="text-left p-4">
-                {String(docenteAtual.qualis[5]).padStart(2, "0")}
-              </td>
-              <td className="text-left p-4">
-                {String(docenteAtual.qualis[6]).padStart(2, "0")}
-              </td>
-              <td className="text-left p-4">
-                {String(docenteAtual.qualis[7]).padStart(2, "0")}
-              </td>
-              <td className="text-left p-4">
-                {String(docenteAtual.qualis[8]).padStart(2, "0")}
-              </td>
+              {docenteAtual.qualis.map((qualis, index) => (
+                <td key={index} className="text-left p-4">
+                  {String(qualis).padStart(2, "0")}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>
