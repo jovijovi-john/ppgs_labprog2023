@@ -9,7 +9,7 @@ export default function App() {
 
   useEffect(() => {}), [navigate];
 
-  const pages = ["Dashboard", "Tecnicas", "Producoes", "Docentes"];
+  const pages = ["Dashboard", "Tecnicas", "Producoes", "Orientacoes"];
 
   function handleButton(title) {
     return (
@@ -37,7 +37,7 @@ export default function App() {
           </ul>
         </aside>
 
-        <div className="mt-12 mx-16 w-full overflow-auto">
+        <div className="mt-12 mx-16 w-full overflow-auto pr-16">
           <Outlet />
         </div>
       </div>

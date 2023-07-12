@@ -10,7 +10,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Dashboard from "./pages/Dashboard/index.jsx";
 import Producoes from "./pages/Producoes/index.jsx";
 import Tecnicas from "./pages/Tecnicas/index.jsx";
-import Docentes from "./pages/Docentes/index.jsx";
+import Orientacoes from "./pages/Orientacoes/index.jsx";
 
 import "./index.css";
 
@@ -36,8 +36,8 @@ const router = createBrowserRouter([
         element: <Tecnicas />,
       },
       {
-        path: "Docentes",
-        element: <Docentes />,
+        path: "Orientacoes",
+        element: <Orientacoes />,
       },
     ],
   },
